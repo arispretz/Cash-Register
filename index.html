@@ -1,105 +1,49 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>show code</title>
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Register</title>
+  <link rel="stylesheet" href="/style.css">
+  <script defer src="/script.js"></script>
 </head>
-  
 <body>
-  <nav id="navbar" class="nav">
+  <div class="wrapper">
+    <div class="content" role="main">
+      <h1 class="title">Cash Register</h1>        
+    </div>
+    <form>
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" placeholder="Enter the price">
 
-<ul class="nav-list">
+      <label for="cash">Cash:</label>
+      <input type="number" id="cash" name="cash" placeholder="Enter the cash amount">
 
-<li>
+      <label for="cid">Cash in Drawer (CID):</label>
+      <p>Example:
+        [
+          ["PENNY", 1.01],
+          ["NICKEL", 2.05],
+          ["DIME", 3.10],
+          ["QUARTER", 4.25],
+          ["ONE", 90.00],
+          ["FIVE", 55.00],
+          ["TEN", 20.00],
+          ["TWENTY", 60.00],
+          ["ONE HUNDRED", 100.00]
+        ]        
+      </p>
+      <textarea id="cid" name="cid" placeholder="Enter the CID in JSON format"></textarea>
 
-<a href="http://arispretz.github.io" target="_blank">Home</a>
-
-</li>
-
-</ul>
-
-</nav>
-
-<h2>my code</h2>
-
-
-<section id="projects" class="projects-section">
-
-  <code onmousedown="return false;">
-    <p>1  function checkCashRegister(price, cash, cid) {{</p>
-<p class="comment">2  // object with money units and their values</p>
-  <p>3  let moneyUnits = { </br>
-  4  "PENNY": 0.01, </br>
-  5  "NICKEL": 0.05, </br>
-  6  "DIME": 0.10, </br>
-  7  "QUARTER": 0.25, </br>
-  8  "ONE": 1.00, </br>
-  9  "FIVE": 5.00, </br>
- 10  "TEN": 10.00, </br>
- 11  "TWENTY": 20.00, </br>
- 12  "ONE HUNDRED": 100.00 </br>
- 13  }</p>
-    <p>14  // total of cash in drawer begins in zero</p>
-  <p>15  let totalCid = 0;</p>
-<p class="comment">16  // for every type of units</p> 
-  <p>17  for (let denomination of cid) {</p>
-<p class="comment">18  // add 0.05 nickel to total of cash in drawer</p> 
-    <p>19  totalCid += denomination[1];</p>
-    <p>20  }</p>
- <p class="comment">21  // total of cash in drawer accept only two decimals</p> 
-<p>22  totalCid = totalCid.toFixed(2);totalCid = totalCid.toFixed(2);</p>
-<p>23  let changeDue = cash - price;</p>
-<p>24  let change = [];</p>
-<p>25  if (changeDue > totalCid) {</p>
-<p>26  return {status: "INSUFFICIENT_FUNDS", change: change};</p>
-<p>27  } else if (changeDue.toFixed(2) === totalCid) {</p>
-<p>28  return {status: "CLOSED", change: cid};</p>
-<p>29   } else {</p>
-<p class="comment">30  // to sort in highest to lowest order cash in drawer</p> 
-<p>31  cid = cid.reverse();</p>
-<p>32  for (let currency of cid) {</p>
-<p>33  let littleBox = [currency[0], 0];</p>
-<p class="comment">34  // while changeDue is greater or equal to the first element of moneyUnits and the second of moneyUnits is more than 0</p>
-<p>35  while (changeDue >= moneyUnits[currency[0]] && currency[1] > 0) {</p>
-<p class="comment">36  // add to the second element of littleBox the first amount of littleBox</p>
-<p>37 littleBox[1] += moneyUnits[currency[0]];</p>
-<p class="comment">38  // subtract to the second element of littleBox the first amount of littleBox</p>
-<p>39  currency[1] -= moneyUnits[currency[0]];</p>
-<p>40  changeDue -= moneyUnits[currency[0]];</p>
-<p class="comment">41  // changeDue accept only two decimals</p>
-<p>42  changeDue = changeDue.toFixed(2);</p>
-<p class="comment">  // add 0.05 nickel to total of cash in drawer</p>
-<p>43  }</p>
-<p class="comment">44  // if the second element in littleBox array is more than zero</p>
-<p>45  if (littleBox[1] > 0) {</p>
-<p class="comment">46  // The contents of the littleBox are added to the change</p>
-<p>47  change.push(littleBox);</p>
-<p>48  }</p>
-<p>49  }</p>
-<p>50  }</p>    
-<p>51  if (changeDue > 0) {</p>    
-<p>52  return {status: "INSUFFICIENT_FUNDS", change: []};</p>    
-<p>53  }</p>   
-<p>54  else {</p>   
-<p>55  return {status: "OPEN", change: change};</p>   
-<p>56  }</p>
-<p>57  }</p>
-<p>58  </p>
-<p>59  checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);</p>
-   
-  </code>
- 
-  <script src="script.js"></script>
-</section>
+      <div id="center">
+        <button id="calculate">Calculate</button>
+        <button id="clear">Clear</button>
+      </div>        
+    </form>
+    <div id="result"></div>
+  </div>
+  <footer class="footer">
+    <p>Created by Ariana Spretz</p>
+  </footer>
 </body>
-
-<footer>
-
-<p>&copy; Created by Ariana Spretz.</p>
-
-</footer>
-
 </html>
